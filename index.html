@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>My first Vue page</title>
+  <style>
+    .pinkBG {
+      background-color: lightpink;
+      padding: 10px;
+    }
+  
+    #mytext {
+      width: 140px;
+      height: 60px;
+      background-color: lightgreen;
+      padding: 20px;
+      font-weight: bold;
+      font-family: 'Courier New', Courier, monospace;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!--the v-bind directive binds  a html attribute to data in the vue instance-->
+    <div v-bind:class="vueClass">
+      <!--this is interpolation and javascript
+      expressions can be written here too -->
+      {{ message+" (the v-bind implementation)" }}
+      <br>
+      {{5+8}} 
+      
+      <!--implementing the v-if directive that will conditionally display the html element -->
+      <p v-if="typewritersInStock">
+        in stock (the v-if implementation)
+      </p>
+      <p v-else>
+        not in stock 
+      </p>
+      <!--implementing the v-show directive -->
+      <p v-show="typewritersInStock">
+       Data Visible -(the v-show implementation)
+      </p>
+
+      <!--Implementing the for directive-->
+      <h4>The v-for implementation</h4>
+      <ol>        
+        <li v-for="x in manyFoods">{{ x }}</li>
+      </ol>
+
+      <!-- Event handling using the v-on directive -->
+      <!--the click event-->
+       <h4>The v-on implementation</h4>
+      <p>{{ "Moose count: " + count }}</p>
+      <button v-on:click="count++">Count moose</button><br>
+
+      <!--the input event-->
+      <h4>The input event</h4>
+      <input v-on:input="inpCount++">
+      <p>{{ 'Input events occured: ' + inpCount }}</p>
+      
+      <!--the method property implementation-->
+      <h4>Implementing the method property</h4>
+      <p>Click on the box below:</p>
+      <div v-on:click="writeText" id="mytext">
+        {{ text }}
+      </div>
+
+
+    </div>    
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+      const app = Vue.createApp({
+        data()
+        {
+          return {
+            text:"",
+            inpCount: 0,
+            count:0,
+            message: "Hello World!",
+            vueClass: "pinkBG",
+            typewritersInStock: true,
+            manyFoods: [
+                'Burrito',
+                'Salad',
+                'Cake',
+                'Soup',
+                'Fish',
+                'Pizza',
+                'Rice'
+              ]
+          }          
+        },
+        methods: 
+        {
+          writeText() 
+          {
+            this.text = 'Hello World!'
+          }
+        }
+      })
+    app.mount('#app')
+  </script>
+</body>
+</html>
