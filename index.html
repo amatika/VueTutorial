@@ -54,7 +54,7 @@
 
       <!--the input event-->
       <h4>The input event</h4>
-      <input v-on:input="inpCount++">
+      <input  v-on:keyup.enter="pressEnter">
       <p>{{ 'Input events occured: ' + inpCount }}</p>
       
       <!--the method property implementation-->
@@ -62,6 +62,25 @@
       <p>Click on the box below:</p>
       <div v-on:click="writeText" id="mytext">
         {{ text }}
+      </div>
+      <!--form example in vue-->
+      <form v-on:submit.prevent="addItem">
+        <p>
+          What do you need?<br>
+          <input type="text" required placeholder="item name.." v-model="itemName">
+        </p>
+        <p>
+          How many?<br>
+          <input type="number" placeholder="number of items.." v-model="itemNumber">
+        </p>
+        <button type="submit">Add item</button>
+      </form>
+    
+      <div>
+        <p>Shopping list:</p>
+        <ul>
+          <li v-for="item in shoppingList">{{ item.name }}, {{ item.number}}</li>
+        </ul>
       </div>
 
 
@@ -74,7 +93,13 @@
         data()
         {
           return {
-            text:"",
+            itemName: null,
+            itemNumber: null,
+            shoppingList: [
+              { name: 'Tomatoes', number: 5 }
+            ],
+
+            text:"test ",
             inpCount: 0,
             count:0,
             message: "Hello World!",
@@ -96,7 +121,26 @@
           writeText() 
           {
             this.text = 'Hello World!'
+          },
+
+          //method called  on pressing the enter key
+          pressEnter(evt)
+          {
+             alert("hello"+ evt.key);
+          },
+
+          //method that gets called when the form is submitted
+          addItem()
+          {
+            let item = {
+              name: this.itemName,
+              number: this.itemNumber
+            }
+            this.shoppingList.push(item)
+            this.itemName = null
+            this.itemNumber = null  
           }
+
         }
       })
     app.mount('#app')
