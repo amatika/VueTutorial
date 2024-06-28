@@ -64,6 +64,7 @@
         {{ text }}
       </div>
       <!--form example in vue-->
+      <h3>Form Example in Vue</h3>
       <form v-on:submit.prevent="addItem">
         <p>
           What do you need?<br>
@@ -82,7 +83,27 @@
           <li v-for="item in shoppingList">{{ item.name }}, {{ item.number}}</li>
         </ul>
       </div>
+    <!--More on the v-model directive -->
+    <h3>The v-model directive</h3>
+    <div id="app">
+      <input type="text" v-model="inpText">
+      <p> {{ inpText }} </p>
+    </div>
 
+    <!--Computed properties in vue-->
+    <h3>Computed Properties in Vue</h3>
+     <div>
+      <label>Enter First Name</label><br>
+      <input placeholder="Enter first name" v-model="firstName"><br>
+      <label>Enter Last Name</label><br>
+      <input placeholder="Enter last name" v-model="lastName">    
+      <p>The full name is: {{fullName}}</p>  
+     </div>
+
+     <!--Watchers in vue-->
+     <h3>Implementation of watchers in vue</h3>
+     <input type="range" min="0" max="100" step="1" v-model="rangeVal">
+     <p><code>{{ rangeVal }}</code></p>
 
     </div>    
   </div>
@@ -93,6 +114,7 @@
         data()
         {
           return {
+            inpText: 'Initial text',
             itemName: null,
             itemNumber: null,
             shoppingList: [
@@ -113,8 +135,29 @@
                 'Fish',
                 'Pizza',
                 'Rice'
-              ]
-          }          
+              ], 
+            firstName: 'John',
+            lastName: 'Doe',
+            rangeVal: 70          
+          }
+        },
+        computed: 
+        {
+          fullName()
+          {
+            return this.firstName + ' ' + this.lastName;
+          }
+          //the computed properties can as well have getters and setters
+          /*fullName: {
+            get() {
+              return this.firstName + ' ' + this.lastName;
+            },
+            set(newValue) {
+              const names = newValue.split(' ');
+              this.firstName = names[0];
+              this.lastName = names[names.length - 1];
+            }
+          }*/
         },
         methods: 
         {
@@ -141,7 +184,29 @@
             this.itemNumber = null  
           }
 
+        },
+        
+      watch: 
+      {
+        rangeVal(val)
+        {
+          if( val>20 && val<60 )
+          {
+            if(val<40)
+            {
+              this.rangeVal = 20;
+            }
+            else
+            {
+              this.rangeVal = 60;
+            }
+          }
         }
+      }
+
+
+
+
       })
     app.mount('#app')
   </script>
